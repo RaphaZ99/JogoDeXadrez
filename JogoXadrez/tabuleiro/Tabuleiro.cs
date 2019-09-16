@@ -11,12 +11,21 @@ namespace tabuleiro
         public int colunas { get; set; }
         private Peca[,] pecas;
 
-        public Tabuleiro(int linhas,int colunas)
+        public Tabuleiro(int linhas, int colunas)
         {
 
             this.linhas = linhas;
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
+        }
+
+        //metodo para retornar uma peça
+        //Em forma de matriz
+
+        public Peca peca(int linha, int coluna)
+        {
+
+            return pecas[linha, coluna];
         }
     }
 }
