@@ -64,16 +64,17 @@ namespace tabuleiro
 
             if (peca(pos) == null)
             {
+                //throw new TabuleiroException("\nVocê não pode mover uma  peça que não existe ");
 
                 return null;
             }
 
-            //pegando a posicao da peça
+            //pegando a peça
             Peca pecaPosicao = peca(pos);
 
-            //marca a posica como nula
+            //marca a posicao da peça como nula
             pecaPosicao.posicao = null;
-            //marca a posição do tabuleiro como nulo
+            //marca a posição da peça no tabuleiro como nulo
             pecas[pos.linha, pos.coluna] = null;
 
             //retorna peça

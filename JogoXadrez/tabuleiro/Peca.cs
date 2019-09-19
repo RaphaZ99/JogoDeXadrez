@@ -6,7 +6,7 @@ namespace tabuleiro
 {
 
     //Classe Generica
-    class Peca
+    abstract class Peca
     {
 
         public Posicao posicao { get; set; }
@@ -30,6 +30,7 @@ namespace tabuleiro
 
         }
 
+        public abstract bool[,] movimentosPossiveis();
 
     }
 }
