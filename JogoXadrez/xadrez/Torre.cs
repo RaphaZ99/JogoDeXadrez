@@ -6,7 +6,7 @@ using tabuleiro;
 namespace xadrez
 {
 
-    //classe herda os atributods da classe Peca
+    //classe herda os atributos da classe Peca
     class Torre : Peca
     {
         public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)

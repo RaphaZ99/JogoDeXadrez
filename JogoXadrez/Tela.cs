@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using tabuleiro;
+using xadrez;
 
 namespace JogoXadrez
 {
@@ -32,6 +33,20 @@ namespace JogoXadrez
             }
             //letras para se fazer as jogadas
             Console.WriteLine("  a b c d e f g h");
+
+
+        }
+        //metodo para ler a peca de origim do usuario
+        //convertendo a string em char, e int.parse para converter -
+        //o numero em letra
+        public static PosicaoXadrez lerPosicaoXadrez()
+        {
+            string posicaoUsuario = Console.ReadLine();
+
+            char coluna = posicaoUsuario[0];
+            //converte a letra em numero
+            int linha = int.Parse(posicaoUsuario[1] + "");
+            return new PosicaoXadrez(coluna, linha);
 
 
         }

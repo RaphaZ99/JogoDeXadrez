@@ -9,7 +9,7 @@ namespace tabuleiro
 
         public int linhas { get; set; }
         public int colunas { get; set; }
-        private Peca[,] pecas;
+        protected Peca[,] pecas;
 
         public Tabuleiro(int linhas, int colunas)
         {
@@ -46,7 +46,8 @@ namespace tabuleiro
         public void colocarPeca(Peca p, Posicao pos)
         {
             //Verificando se existe uma peça na posição Determinada
-            if(existePeca(pos)){
+            if (existePeca(pos))
+            {
 
                 throw new TabuleiroException("Ja existe uma peça nessa Posição");
             }
@@ -55,10 +56,37 @@ namespace tabuleiro
             pecas[pos.linha, pos.coluna] = p;
             p.posicao = pos;
         }
+
+
+        //metodo para retirar a peça de uma posicao
+        public Peca retirarPeca(Posicao pos)
+        {
+
+            if (peca(pos) == null)
+            {
+
+                return null;
+            }
+
+            //pegando a posicao da peça
+            Peca pecaPosicao = peca(pos);
+
+            //marca a posica como nula
+            pecaPosicao.posicao = null;
+            //marca a posição do tabuleiro como nulo
+            pecas[pos.linha, pos.coluna] = null;
+
+            //retorna peça
+            return pecaPosicao;
+
+        }
+
+
+
         //metodo para testar se o Pos(posicão da peça)  é valida
         public bool posicaoValida(Posicao pos)
         {
-            if(pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
+            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas)
             {
                 return false;
 
