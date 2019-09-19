@@ -6,9 +6,11 @@ namespace xadrez
     {
 
         public Tabuleiro tab { get; private set; }
-        private int turno { get; set; }
-        private Cor jogadorAtual;
+        public int turno { get; set; }
+        public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
+
+
 
         //construtor criando o tabuleiro 8x8, iniciando o turno e definindo o jogador incial
         public PartidaDeXadrez()
@@ -24,6 +26,60 @@ namespace xadrez
 
         }
 
+        public void realizaJogada(Posicao origem, Posicao destino)
+        {
+            executaMovimento(origem, destino);
+
+            turno++;
+
+            mudaJogador();
+
+        }
+
+        public void validarPosicaoDeOrigem(Posicao pos)
+        {
+
+            if(tab.peca(pos) == null)
+            {
+
+                throw new TabuleiroException("Não eixste peça nna psoicao de origem");
+
+
+            }
+            if(jogadorAtual != tab.peca(pos).cor)
+            {
+                throw new TabuleiroException("A peça de origem escolhida não e sua");
+            }
+            if (!tab.peca(pos).existeMovimentosPossiveis())
+            {
+                throw new TabuleiroException("Não ha movimentos possiveis na peça de origem");
+            }
+            
+        }
+
+        public void validarPosicaoDeDeestino(Posicao origem, Posicao destino)
+        {
+
+            if (!tab.peca(origem).podeMoverPara(destino))
+            {
+                throw new TabuleiroException("Posicao de destino invalida");
+
+            }
+
+        }
+
+        private void mudaJogador()
+        {
+            if(jogadorAtual == Cor.Branca)
+            {
+                jogadorAtual = Cor.Preta;
+
+            } else
+            {
+                jogadorAtual = Cor.Branca;
+            }
+
+        }
 
 
         //metodo para executar um movimento(fazer uma jogada) dentro do tabuleiro de xadrez
