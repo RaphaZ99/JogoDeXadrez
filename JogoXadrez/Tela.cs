@@ -8,6 +8,62 @@ namespace JogoXadrez
 {
     class Tela
     {
+
+
+        public static void imprimirPartida(PartidaDeXadrez partida)
+        {
+            imprimirTabuleiro(partida.tab);
+            Console.WriteLine();
+
+            imprimirPecasCapturadas(partida);
+
+            Console.WriteLine("Turno : " + partida.turno);
+            Console.WriteLine("Aguardando Jogada : " + partida.jogadorAtual);
+
+
+
+        }
+
+        public static void imprimirPecasCapturadas(PartidaDeXadrez partida)
+        {
+
+            Console.WriteLine("Peças Capturadas : ");
+            Console.WriteLine();
+            Console.Write("Brancas: ");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Branca));
+
+            ConsoleColor aux = Console.ForegroundColor;
+
+            ConsoleColor amarelo = ConsoleColor.Yellow;
+
+            Console.WriteLine();
+
+            Console.Write("Peças Preta: ");
+
+            Console.ForegroundColor = amarelo;
+
+            imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
+
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto)
+        {
+
+            Console.Write("[");
+            foreach (Peca x in conjunto)
+            {
+
+                Console.Write(x + " ");
+
+            }
+
+            Console.Write("]\n");
+
+
+        }
+
         //metodo para imprimir o tabuleiro
 
         public static void imprimirTabuleiro(Tabuleiro tab)
@@ -16,7 +72,7 @@ namespace JogoXadrez
             ConsoleColor fundoOriginal = Console.BackgroundColor;
             ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
 
-
+            Console.WriteLine("* A B C D E F G H");
             // numero que fica ao lado que vao de 1 a 8 
             for (int i = 0; i < tab.linhas; i++)
             {
@@ -25,7 +81,7 @@ namespace JogoXadrez
 
                 for (int j = 0; j < tab.colunas; j++)
                 {
-                   
+
 
                     imprimirPeca(tab.peca(i, j));
 
@@ -34,7 +90,7 @@ namespace JogoXadrez
                 Console.WriteLine();
             }
             //letras para se fazer as jogadas
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("* A B C D E F G H");
             Console.BackgroundColor = fundoOriginal;
 
 
@@ -46,8 +102,8 @@ namespace JogoXadrez
 
             ConsoleColor fundoOriginal = Console.BackgroundColor;
             ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
-            
-            
+
+
             // numero que fica ao lado que vao de 1 a 8 
             for (int i = 0; i < tab.linhas; i++)
             {
@@ -56,7 +112,7 @@ namespace JogoXadrez
 
                 for (int j = 0; j < tab.colunas; j++)
                 {
-                    if(posicoesPossiveis[i,j])
+                    if (posicoesPossiveis[i, j])
                     {
                         //alterando o fundo das posicções das matrizes onde e possivel fazer movimentações
                         Console.BackgroundColor = fundoAlterado;
@@ -76,7 +132,7 @@ namespace JogoXadrez
                 Console.WriteLine();
             }
             //letras para se fazer as jogadas
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("* A B C D E F G H");
             Console.BackgroundColor = fundoOriginal;
 
 
@@ -126,7 +182,7 @@ namespace JogoXadrez
 
                 }
                 Console.Write(" ");
-              
+
             }
         }
 
