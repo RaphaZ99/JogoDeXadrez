@@ -12,6 +12,7 @@ namespace xadrez
         public bool terminada { get; private set; }
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
+        public bool xeque { get; private set; }
 
 
 
@@ -20,21 +21,61 @@ namespace xadrez
         {
 
             tab = new Tabuleiro(8, 8);
+            xeque = false;
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
-
+           
             colocarPeca();
 
 
 
         }
 
+        public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
+        {
+            Peca p = tab.retirarPeca(destino);
+            p.decrementarQtdeMovimento();
+            if(pecaCapturada != null)
+            {
+                tab.colocarPeca(pecaCapturada, destino);
+                capturadas.Remove(pecaCapturada);
+
+
+            }
+            tab.colocarPeca(p, origem);
+
+        }
+
         public void realizaJogada(Posicao origem, Posicao destino)
         {
-            executaMovimento(origem, destino);
+           Peca pecaCapturada =  executaMovimento(origem, destino);
+
+
+            if (estaEmCheque(jogadorAtual))
+            {
+                desfazMovimento(origem, destino, pecaCapturada);
+
+                throw new TabuleiroException("Você não pode se colcoar em Xeque");
+
+            }
+            if (estaEmCheque(adversaria(jogadorAtual)))
+            {
+
+                xeque = true;
+            }
+            else
+            {
+
+                xeque = false;
+            }
+
+               
+            
+
+
 
             turno++;
 
@@ -48,7 +89,7 @@ namespace xadrez
             if(tab.peca(pos) == null)
             {
 
-                throw new TabuleiroException("Não eixste peça nna psoicao de origem");
+                throw new TabuleiroException("Não existe peça nna posição de origem");
 
 
             }
@@ -97,7 +138,7 @@ namespace xadrez
 
 
         //metodo para executar um movimento(fazer uma jogada) dentro do tabuleiro de xadrez
-        public void executaMovimento(Posicao origem,Posicao destino)
+        public Peca executaMovimento(Posicao origem,Posicao destino)
         {
             
             Peca p = tab.retirarPeca(origem);
@@ -109,6 +150,8 @@ namespace xadrez
 
                 capturadas.Add(pecaCapturada);
             }
+
+            return pecaCapturada;
 
         }
 
@@ -127,8 +170,58 @@ namespace xadrez
             }
             return aux;
         }
+             
+        private Cor adversaria(Cor cor)
+        {
+
+            if (cor == Cor.Branca)
+            {
+
+                return Cor.Preta;
+            }
+            else
+            {
+                return Cor.Branca;
 
 
+
+
+            }
+        }
+
+        private Peca rei(Cor cor)
+        {
+            foreach (Peca x in pecasEmJogo(cor))
+            {
+                if (x is Rei)
+                {
+                    return x;
+
+                }
+
+            }
+
+            return null;
+        }
+
+        public bool estaEmCheque(Cor cor)
+        {
+            Peca R = rei(cor);
+            
+
+
+            foreach(Peca x in pecasEmJogo(adversaria(cor)))
+             {
+
+                bool[,] mat = x.movimentosPossiveis();
+                if (mat[R.posicao.linha, R.posicao.coluna])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public HashSet<Peca> pecasEmJogo(Cor cor)
         {

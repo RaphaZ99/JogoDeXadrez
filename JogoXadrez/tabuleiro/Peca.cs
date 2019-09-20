@@ -13,7 +13,7 @@ namespace tabuleiro
         public Cor cor { get; protected set; }
         public  int qteMovimentos { get; private set; }
         public Tabuleiro tab { get; set; }
-
+       
 
         public Peca (Tabuleiro tab, Cor cor)
         {
@@ -27,6 +27,11 @@ namespace tabuleiro
         public void incrementarQtdeMovimento()
         {
             qteMovimentos++;
+
+        }
+        public void decrementarQtdeMovimento()
+        {
+           qteMovimentos--;
 
         }
 
