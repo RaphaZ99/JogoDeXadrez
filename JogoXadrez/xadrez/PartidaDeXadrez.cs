@@ -11,20 +11,21 @@ namespace xadrez
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
         private HashSet<Peca> pecas;
+
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
 
 
 
-        //construtor criando o tabuleiro 8x8, iniciando o turno e definindo o jogador incial
+        //construtor criando o tabuleiro 8x8, iniciando o turno e definindo o jogador inicial
         public PartidaDeXadrez()
         {
 
             tab = new Tabuleiro(8, 8);
-            xeque = false;
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
+            xeque = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
            
@@ -56,15 +57,19 @@ namespace xadrez
 
             if (estaEmCheque(jogadorAtual))
             {
+
+
                 desfazMovimento(origem, destino, pecaCapturada);
 
-                throw new TabuleiroException("Você não pode se colcoar em Xeque");
+                throw new TabuleiroException("Você não pode se colocar em Xeque");
+
 
             }
             if (estaEmCheque(adversaria(jogadorAtual)))
             {
 
                 xeque = true;
+            
             }
             else
             {
@@ -72,11 +77,7 @@ namespace xadrez
                 xeque = false;
             }
 
-               
-            
-
-
-
+     
             turno++;
 
             mudaJogador();
@@ -89,7 +90,7 @@ namespace xadrez
             if(tab.peca(pos) == null)
             {
 
-                throw new TabuleiroException("Não existe peça nna posição de origem");
+                throw new TabuleiroException("Não existe peça na posição de origem");
 
 
             }
@@ -145,6 +146,7 @@ namespace xadrez
             p.incrementarQtdeMovimento();
             Peca pecaCapturada = tab.retirarPeca(destino);
             tab.colocarPeca(p, destino);
+
             if(pecaCapturada != null)
             {
 
@@ -206,17 +208,30 @@ namespace xadrez
 
         public bool estaEmCheque(Cor cor)
         {
-            Peca R = rei(cor);
-            
 
+           var R = Peca();
+
+            R = rei(cor);
+
+
+
+
+            if (R == null)
+            {
+
+                throw new TabuleiroException("Não tem a cor deste Rei no tabuleiro");
+            }
 
             foreach(Peca x in pecasEmJogo(adversaria(cor)))
              {
 
                 bool[,] mat = x.movimentosPossiveis();
+
                 if (mat[R.posicao.linha, R.posicao.coluna])
                 {
+
                     return true;
+
                 }
             }
 

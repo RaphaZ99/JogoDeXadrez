@@ -19,7 +19,7 @@ namespace JogoXadrez
 
             Console.WriteLine("Turno : " + partida.turno);
             Console.WriteLine("Aguardando Jogada : " + partida.jogadorAtual);
-            if (partida.xeque == true)
+            if (partida.xeque)
             {
                 Console.WriteLine("XEQUE");
 

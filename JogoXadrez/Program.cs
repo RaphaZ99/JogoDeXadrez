@@ -42,6 +42,7 @@ namespace JogoXadrez
 
 
                         partida.realizaJogada(origem, destino);
+
                     } catch(TabuleiroException e)
                     {
                         Console.WriteLine(e.Message);
