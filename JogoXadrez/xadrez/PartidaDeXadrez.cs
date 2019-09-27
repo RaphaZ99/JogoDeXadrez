@@ -55,7 +55,7 @@ namespace xadrez
            Peca pecaCapturada =  executaMovimento(origem, destino);
 
 
-            if (estaEmCheque(jogadorAtual))
+            if (estaEmXeque(jogadorAtual))
             {
 
 
@@ -65,7 +65,7 @@ namespace xadrez
 
 
             }
-            if (estaEmCheque(adversaria(jogadorAtual)))
+            if (estaEmXeque(adversaria(jogadorAtual)))
             {
 
                 xeque = true;
@@ -193,6 +193,8 @@ namespace xadrez
 
         private Peca rei(Cor cor)
         {
+            //Peca super classe
+            //Diante disso eu tenho Todas as subClasse
             foreach (Peca x in pecasEmJogo(cor))
             {
                 if (x is Rei)
@@ -206,17 +208,14 @@ namespace xadrez
             return null;
         }
 
-        public bool estaEmCheque(Cor cor)
+        public bool estaEmXeque(Cor cor)
         {
 
-           var R = Peca();
+            Peca r = rei(cor);
 
-            R = rei(cor);
+        
 
-
-
-
-            if (R == null)
+            if (r == null)
             {
 
                 throw new TabuleiroException("Não tem a cor deste Rei no tabuleiro");
@@ -227,7 +226,7 @@ namespace xadrez
 
                 bool[,] mat = x.movimentosPossiveis();
 
-                if (mat[R.posicao.linha, R.posicao.coluna])
+                if (mat[r.posicao.linha, r.posicao.coluna])
                 {
 
                     return true;
@@ -243,7 +242,7 @@ namespace xadrez
 
             HashSet<Peca> aux = new HashSet<Peca>();
 
-            foreach (Peca x in capturadas)
+            foreach (Peca x in pecas)
             {
                 if (x.cor == cor)
                 {

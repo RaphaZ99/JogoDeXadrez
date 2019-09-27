@@ -9,8 +9,8 @@ namespace tabuleiro
 
         public int linhas { get; set; }
         public int colunas { get; set; }
-        protected Peca[,] pecas;
-
+        public Peca[,] pecas;
+ 
         public Tabuleiro(int linhas, int colunas)
         {
 
