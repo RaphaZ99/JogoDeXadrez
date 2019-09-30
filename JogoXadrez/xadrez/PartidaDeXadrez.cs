@@ -141,7 +141,7 @@ namespace xadrez
 
             // # Joga Especial en passant
 
-            if(p is Peao &&  (destino.linha == origem.linha - 2 && destino.linha == origem.linha + 2))
+            if(p is Peao &&  (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2))
             {
                 vulneravelEmPassant = p;
 
